@@ -8,13 +8,17 @@ import sys
 
 import Objects
 
+positions = [(50, 50), (1230, 670), (50, 450), (1230, 270), (450, 450), (930, 160), (300, 200), (930, 500)]
+greenTankPosition = positions.pop(random.randrange(len(positions)))
+purpleTankPosition = positions.pop(random.randrange(len(positions)))
+
 pygame.init()
 world = Objects.world()
 surface = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
 greenTankPictureDirectory = 'Tanks/greenTank3.png'
-greenTank = Objects.tank(50, 50, greenTankPictureDirectory)
+greenTank = Objects.tank(greenTankPosition[0], greenTankPosition[1], greenTankPictureDirectory, surface)
 purpleTankPictureDirectory = 'Tanks/purpleTank.png'
-purpleTank = Objects.tank(1230, 670, purpleTankPictureDirectory)
+purpleTank = Objects.tank(purpleTankPosition[0], purpleTankPosition[1], purpleTankPictureDirectory, surface)
 
 
 def quitGame():
@@ -24,7 +28,6 @@ def quitGame():
 
 while True:
     for event in GAME_EVENTS.get():
-
         if event.type == pygame.KEYDOWN:
             # greenTank
             if event.key == pygame.K_UP:
@@ -82,11 +85,11 @@ while True:
             quitGame()
 
     world.drawMap(surface)
-    greenTank.move()
-    greenTank.rotate()
+    greenTank.move(surface)
+    greenTank.rotate(surface)
     greenTank.drawTank(surface)
-    purpleTank.move()
-    purpleTank.rotate()
+    purpleTank.move(surface)
+    purpleTank.rotate(surface)
     purpleTank.drawTank(surface)
     for bullet in purpleTank.bullets:
         collisionKind = bullet.collision(surface)
