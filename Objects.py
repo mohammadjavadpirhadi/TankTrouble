@@ -136,7 +136,7 @@ class world:
 
     def drawMap(self, surface):
         self.chooseMap()
-        surface.blit(self.Map, (0, 0))
+        surface.blit(self.Map, (43, 0))
 
     def __init__(self):
         self.maps = []
@@ -369,6 +369,14 @@ class tank:
                     return 'leftRearCollision'
         return False
 
+    def restart(self, X, Y):
+        self.x = X
+        self.y = Y
+        self.angle = random.randrange(360)
+        self.isWracked = False
+        self.wrackTime = 0
+        self.bullets = []
+
     def __init__(self, X, Y, Imagedirectory, surface):
         self.x = X
         self.y = Y
@@ -385,7 +393,6 @@ class tank:
         self.v = 5
         self.vx = self.v * math.cos((-self.angle * math.pi) / 180)
         self.vy = self.v * math.sin((-self.angle * math.pi) / 180)
-        self.collisions = {}
         self.forwardDirection = False
         self.backwardDirection = False
         self.leftRotate = False
@@ -393,6 +400,8 @@ class tank:
         self.rotate(surface)
         self.bullets = []
         self.isWracked = False
+        self.wrackTime = 0
+        self.score = 0
 
 
 class bullet:
